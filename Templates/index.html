@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <title>Chuẩn Đoán Bệnh Tim</title>
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle">Dark Mode</button>
+    <div class="content">
+        <div class="form-container">
+            <h2>Form Chẩn Đoán Bệnh Tim</h2>
+            <form id="diagnosis-form" action="/submit" method="post">
+                <fieldset>
+                    <legend>Thông tin cơ bản</legend>
+                    <div class="form-group">
+                        <label for="age">Tuổi của bạn:</label>
+                        <input type="number" id="age" name="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính của bạn:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="sex" value="1" required> Nam
+                            </label>
+                            <label>
+                                <input type="radio" name="sex" value="0" required> Nữ
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cp">Loại đau ngực (0-3):</label>
+                        <select id="cp" name="cp" required>
+                            <option value="0">Đau ngực điển hình</option>
+                            <option value="1">Đau ngực không điển hình</option>
+                            <option value="2">Đau do gắng sức</option>
+                            <option value="3">Không đau ngực</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Huyết áp và cholesterol</legend>
+                    <div class="form-group">
+                        <label for="trestbps">Huyết áp khi nghỉ ngơi:</label>
+                        <input type="number" id="trestbps" name="trestbps" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="chol">Lượng cholesterol trong máu:</label>
+                        <input type="number" id="chol" name="chol" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Đường huyết của bạn lúc đang đói:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="fbs" value="1" required> >= 120 mg/dl
+                            </label>
+                            <label>
+                                <input type="radio" name="fbs" value="0" required> < 120 mg/dl
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Điện tâm đồ và nhịp tim</legend>
+                    <div class="form-group">
+                        <label for="restecg">Kết quả điện tâm đồ lúc nghỉ ngơi (0-2):</label>
+                        <input type="number" id="restecg" name="restecg" min="0" max="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="thalach">Nhịp tim tối đa:</label>
+                        <input type="number" id="thalach" name="thalach" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bạn có bị đau thắt ngực do gắng sức không?</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="exang" value="1" required> Có
+                            </label>
+                            <label>
+                                <input type="radio" name="exang" value="0" required> Không
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Thông tin khác</legend>
+                    <div class="form-group">
+                        <label for="oldpeak">Sự thay đổi đoạn ST so với lúc nghỉ ngơi:</label>
+                        <input type="number" id="oldpeak" name="oldpeak" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="slope">Độ dốc của đoạn ST (0-2):</label>
+                        <input type="number" id="slope" name="slope" min="0" max="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ca">Số lượng mạch máu bị tắc nghẽn (0-3):</label>
+                        <input type="number" id="ca" name="ca" min="0" max="3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="thal">Kết quả kiểm tra Thallium (0-3):</label>
+                        <input type="number" id="thal" name="thal" min="0" max="3" required>
+                    </div>                  
+                </fieldset>
+                <fieldset>
+                    <legend>Tuỳ chọn thuật toán</legend>
+                    <div class="form-group">
+                        <label for="algorithm">Chọn thuật toán:</label>
+                        <select id="algorithm" name="algorithm" required>
+                            <option value="random_forest">Random Forest</option>
+                            <option value="logistic_regression">Logistic Regression</option>
+                            <option value="decision_tree">Decision Tree</option>
+                            <option value="knn">K-Nearest Neighbors</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <button type="button" id="diagnosisButton">Chẩn đoán</button>
+                </div>
+            </form>
+        </div>
+        <div id="result-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="result"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
